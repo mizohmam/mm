@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>بهية للنقاشة والدهانات</title>
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --bg-2: #efe4d4;
+      --card: rgba(255,255,255,.72);
+      --card-strong: rgba(255,255,255,.9);
+      --text: #2f241b;
+      --muted: #78675b;
+      --line: rgba(115, 89, 66, 0.14);
+      --brand: #b78655;
+      --brand-2: #8e6440;
+      --dark: #2c2119;
+      --shadow: 0 18px 50px rgba(61, 39, 23, .12);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --max: 430px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Tahoma", "Arial", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(196, 154, 110, .18), transparent 25%),
+        radial-gradient(circle at bottom left, rgba(143, 111, 78, .12), transparent 28%),
+        linear-gradient(180deg, #fbf7f2 0%, #f5ede1 100%);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .page {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 14px 14px 110px;
+      position: relative;
+    }
+
+    .bg-noise,
+    .bg-noise::before,
+    .bg-noise::after {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bg-noise::before,
+    .bg-noise::after {
+      content: "";
+      filter: blur(70px);
+      opacity: .45;
+    }
+
+    .bg-noise::before {
+      width: 200px;
+      height: 200px;
+      background: rgba(190, 145, 99, .24);
+      top: 70px;
+      right: -50px;
+      border-radius: 50%;
+      animation: floatBlob 12s ease-in-out infinite;
+    }
+
+    .bg-noise::after {
+      width: 180px;
+      height: 180px;
+      background: rgba(126, 92, 64, .14);
+      bottom: 120px;
+      left: -40px;
+      border-radius: 50%;
+      animation: floatBlob 14s ease-in-out infinite reverse;
+    }
+
+    @keyframes floatBlob {
+      0%,100% { transform: translateY(0) translateX(0) scale(1); }
+      50% { transform: translateY(-16px) translateX(12px) scale(1.06); }
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      width: 0;
+      background: linear-gradient(90deg, var(--brand), #d9ae7c, #f0d2af);
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(183, 134, 85, .35);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: rgba(255,255,255,.62);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,.6);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      margin-bottom: 14px;
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+    }
+
+    .brandbox { display: flex; align-items: center; gap: 12px; }
+
+    .brand-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      background: linear-gradient(145deg, var(--brand), var(--brand-2));
+      color: white;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 25px rgba(142, 100, 64, .28);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .brand-icon::before {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto -10%;
+      width: 70%;
+      height: 170%;
+      background: rgba(255,255,255,.25);
+      transform: rotate(25deg);
+      animation: shine 4s linear infinite;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-110px) rotate(25deg); }
+      100% { transform: translateX(170px) rotate(25deg); }
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(255,255,255,.55);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-2);
+      backdrop-filter: blur(8px);
+    }
+
+    .topbar small { display: block; color: var(--muted); font-weight: 700; }
+    .topbar strong { display: block; font-size: 14px; }
+
+    .hero {
+      position: relative;
+      min-height: 580px;
+      border-radius: 34px;
+      overflow: hidden;
+      box-shadow: 0 28px 60px rgba(60, 37, 21, .16);
+      background: #201811;
+      isolation: isolate;
+    }
+
+    .hero-media,
+    .hero-overlay,
+    .hero-glow { position: absolute; inset: 0; }
+
+    .hero-media {
+      background-image: url('https://images.pexels.com/photos/18470953/pexels-photo-18470953.jpeg?cs=srgb&dl=pexels-alan-antony-279974862-18470953.jpg&fm=jpg');
+      background-size: cover;
+      background-position: center center;
+      transform: scale(1.05);
+      transition: transform .35s ease-out;
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(180deg, rgba(28, 20, 13, .10) 0%, rgba(28, 20, 13, .34) 35%, rgba(28, 20, 13, .84) 100%),
+        linear-gradient(135deg, rgba(183,134,85,.10), transparent 35%);
+    }
+
+    .hero-glow {
+      background:
+        radial-gradient(circle at 80% 18%, rgba(247, 204, 150, .28), transparent 22%),
+        radial-gradient(circle at 15% 85%, rgba(184, 132, 84, .16), transparent 22%);
+      mix-blend-mode: screen;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      min-height: 580px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 22px;
+      color: white;
+    }
+
+    .hero h1 {
+      margin: 14px 0 10px;
+      font-size: 31px;
+      line-height: 1.28;
+      letter-spacing: -.5px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: rgba(255,255,255,.84);
+      font-size: 14px;
+      line-height: 1.95;
+    }
+
+    .hero-badges {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .glass-stat {
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.14);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+
+    .glass-stat b { font-size: 20px; display: block; }
+    .glass-stat span { font-size: 11px; color: rgba(255,255,255,.72); }
+
+    .cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      height: 52px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform .2s ease, box-shadow .2s ease, background .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn:active { transform: scale(.98); }
+
+    .btn.primary {
+      background: linear-gradient(135deg, #f4d4ae, #c69361);
+      color: #2a1e15;
+      box-shadow: 0 14px 30px rgba(198, 147, 97, .28);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,.10);
+      color: white;
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 15%, rgba(255,255,255,.32) 50%, transparent 85%);
+      transform: translateX(-120%);
+      animation: ctaShine 5s linear infinite;
+    }
+
+    @keyframes ctaShine {
+      0%, 18% { transform: translateX(-120%); }
+      26%, 100% { transform: translateX(120%); }
+    }
+
+    .section {
+      margin-top: 18px;
+      padding: 20px;
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.55);
+      backdrop-filter: blur(14px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head { margin-bottom: 14px; }
+    .section-head h2 {
+      margin: 12px 0 8px;
+      font-size: 24px;
+      line-height: 1.45;
+    }
+    .section-head p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .features {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: start;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.55);
+    }
+
+    .feature i,
+    .service-icon,
+    .mini-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, rgba(183,134,85,.18), rgba(142,100,64,.12));
+      color: var(--brand-2);
+      font-style: normal;
+      font-weight: 900;
+    }
+
+    .feature b, .service-card h3, .price-card h3, .faq-item h3 {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .feature span, .service-card p, .price-card p, .faq-item p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.85;
+    }
+
+    .service-grid,
+    .faq,
+    .testimonials,
+    .gallery-grid,
+    .price-grid { display: grid; gap: 12px; }
+
+    .service-card,
+    .price-card,
+    .faq-item,
+    .testimonial {
+      border-radius: 22px;
+      padding: 16px;
+      background: var(--card-strong);
+      border: 1px solid rgba(255,255,255,.72);
+      box-shadow: 0 10px 28px rgba(53, 33, 18, .06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before,
+    .price-card.highlight::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      left: -30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(203,159,112,.18), transparent 70%);
+    }
+
+    .service-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(183,134,85,.08);
+      color: var(--brand-2);
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid rgba(183,134,85,.12);
+    }
+
+    .gallery-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .shot {
+      position: relative;
+      overflow: hidden;
+      border-radius: 22px;
+      min-height: 220px;
+      background: #ddd;
+      box-shadow: 0 18px 35px rgba(47, 31, 20, .08);
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s ease;
+    }
+
+    .shot:hover img { transform: scale(1.07); }
+
+    .shot .label {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(33,24,18,.72);
+      color: white;
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .wide { grid-column: span 2; min-height: 250px; }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .compare-card {
+      padding: 18px;
+      border-radius: 20px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.58));
+      border: 1px solid rgba(255,255,255,.66);
+    }
+
+    .compare-card.after {
+      background: linear-gradient(180deg, rgba(44,33,25,.96), rgba(68,48,34,.95));
+      color: white;
+    }
+
+    .compare-card small { font-weight: 800; color: var(--muted); }
+    .compare-card.after small { color: rgba(255,255,255,.6); }
+    .compare-card ul {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .price-card.highlight {
+      background: linear-gradient(180deg, #2f231a, #1f1711);
+      color: white;
+      box-shadow: 0 18px 40px rgba(45, 31, 20, .24);
+    }
+
+    .price-card.highlight p,
+    .price-card.highlight li,
+    .price-card.highlight .price-sub { color: rgba(255,255,255,.74); }
+
+    .price-title {
+      font-size: 28px;
+      font-weight: 900;
+      margin: 8px 0 6px;
+      letter-spacing: -.6px;
+    }
+
+    .price-sub {
+      font-size: 12px;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .price-list {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .price-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+    }
+
+    .stars { color: #c98e50; font-size: 16px; letter-spacing: 2px; }
+    .testimonial b { margin-top: 10px; display: block; }
+
+    .faq-item { cursor: pointer; }
+    .faq-item p {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .35s ease, opacity .3s ease, margin-top .3s ease;
+      opacity: 0;
+      margin-top: 0;
+    }
+
+    .faq-item.active p {
+      max-height: 160px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .faq-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .faq-plus {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: rgba(183,134,85,.10);
+      color: var(--brand-2);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      flex-shrink: 0;
+      transition: transform .25s ease;
+    }
+
+    .faq-item.active .faq-plus { transform: rotate(45deg); }
+
+    .contact-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(44,33,25,.98), rgba(62,46,35,.96));
+      color: white;
+      border-radius: 30px;
+      padding: 22px;
+      box-shadow: 0 22px 50px rgba(35, 23, 15, .22);
+    }
+
+    .contact-card::before,
+    .contact-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .contact-card::before {
+      width: 120px;
+      height: 120px;
+      background: rgba(213, 164, 108, .22);
+      top: -30px;
+      left: -20px;
+    }
+
+    .contact-card::after {
+      width: 100px;
+      height: 100px;
+      background: rgba(255,255,255,.08);
+      bottom: -20px;
+      right: -10px;
+    }
+
+    .contact-card p { color: rgba(255,255,255,.78); font-size: 13px; line-height: 1.95; }
+
+    .phone-box {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .phone-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 52px;
+      border-radius: 18px;
+      font-size: 14px;
+      font-weight: 900;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .sticky-cta {
+      position: fixed;
+      right: 50%;
+      transform: translateX(50%);
+      bottom: 14px;
+      width: min(calc(100% - 22px), calc(var(--max) - 18px));
+      padding: 10px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,.75);
+      box-shadow: 0 18px 40px rgba(45, 29, 18, .16);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      z-index: 80;
+    }
+
+    .sticky-cta a {
+      height: 50px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 900;
+      gap: 8px;
+    }
+
+    .sticky-cta .call {
+      background: linear-gradient(135deg, #e1b787, #b88656);
+      color: #2a1d13;
+    }
+
+    .sticky-cta .wa {
+      background: #1f1812;
+      color: white;
+    }
+
+    .muted-note {
+      margin-top: 12px;
+      font-size: 11px;
+      line-height: 1.9;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px) scale(.98);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @media (min-width: 431px) {
+      body { padding-inline: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-noise"></div>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <div class="page">
+    <div class="topbar reveal">
+      <div class="brandbox">
+        <div class="brand-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 16L14 6L18 10L8 20H4V16Z" fill="currentColor"/>
+            <path d="M15 5L17 3L21 7L19 9L15 5Z" fill="currentColor" opacity=".72"/>
+          </svg>
+        </div>
+        <div>
+          <small>صفحة هبوط موبايل فقط</small>
+          <strong id="bizNameTop">بهية للنقاشة والدهانات</strong>
+        </div>
+      </div>
+      <div class="eyebrow">تشطيب نظيف ولمسة تقنع</div>
+    </div>
+
+    <section class="hero reveal" id="hero">
+      <div class="hero-media" id="heroMedia"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-glow"></div>
+      <div class="hero-content">
+        <div class="eyebrow">نقاش محترف للبيوت والشقق والمحلات</div>
+        <h1>جدّد بيتك بألوان مرتبة وتشطيب يرفع قيمة المكان</h1>
+        <p>
+          تنفيذ دهانات داخلية وخارجية ومعجون وتأسيس وتشطيب نهائي بشكل نظيف جدًا وبسعر واضح من البداية.
+          الصفحة مصممة لتقنع العميل فورًا وتدفعه للتواصل مباشرة.
+        </p>
+
+        <div class="hero-badges">
+          <div class="glass-stat">
+            <b data-count="8">0</b>
+            <span>سنوات خبرة</span>
+          </div>
+          <div class="glass-stat">
+            <b data-count="250">0</b>
+            <span>مشروع منجز</span>
+          </div>
+          <div class="glass-stat">
+            <b data-count="100">0</b>
+            <span>اهتمام بالتفاصيل</span>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn primary" id="heroCall" href="#">اتصل الآن</a>
+          <a class="btn secondary" id="heroWa" href="#">واتساب مباشر</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">ليش يختارونك أنت</div>
+        <h2>العميل ما يبغى مجرد دهان<br>العميل يبغى فرق واضح</h2>
+        <p>
+          اعتمدت هنا على ستايل دافئ ومحايد بدرجات بيج وموكا، لأنه يعطي إحساس بالنظافة والفخامة ويخدم مجال الدهانات والتشطيبات أكثر من الألوان الصارخة. كما أن صفحات الإلهام في Dribbble لقطاع painting services تميل إلى التخطيط النظيف والبطل الواضح والخدمات المباشرة، وهو ما بنيت عليه هذه الصفحة. ([dribbble.com](https://dribbble.com/search/painting-landing-page?utm_source=chatgpt.com))
+        </p>
+      </div>
+
+      <div class="features">
+        <div class="feature">
+          <i>✓</i>
+          <div>
+            <b>شغل نظيف جدًا</b>
+            <span>تغطية الأرضيات والعفش والحرص على تسليم المكان بشكل مرتب.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <i>✓</i>
+          <div>
+            <b>سعر واضح قبل البداية</b>
+            <span>المعاينة وتحديد المطلوب ثم إعطاء العميل عرض مفهوم بدون لف ودوران.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <i>✓</i>
+          <div>
+            <b>اقتراح ألوان مناسبة</b>
+            <span>مساعدة العميل في اختيار درجة الدهان التي تعطي فخامة واتساع للمكان.</span>
+          </div>
+        </div>
+        <div class="feature">
+          <i>✓</i>
+          <div>
+            <b>سرعة والتزام بالمواعيد</b>
+            <span>العميل يرتاح لما يشوف إن التنفيذ منظم وليس عشوائي.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">صور تخدم الإقناع</div>
+        <h2>صور مهنية تعطي الصفحة قيمة بصرية حقيقية</h2>
+        <p>
+          اعتمدت صورًا مرتبطة مباشرة بالنقاشة والتجديد مثل عامل يستخدم الرول ومعالجة الجدار وصالة نهائية أنيقة، وهي نوعية صور متوفرة بوضوح على Pexels وUnsplash وتناسب هذا المجال. ([pexels.com](https://www.pexels.com/photo/man-painting-walls-in-new-apartment-5691597/?utm_source=chatgpt.com))
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="shot">
+          <img src="https://images.pexels.com/photos/5493655/pexels-photo-5493655.jpeg?cs=srgb&dl=pexels-shkrabaanthony-5493655.jpg&fm=jpg" alt="نقاش محترف ينفذ دهان داخلي" loading="lazy">
+          <div class="label">تنفيذ دهانات داخلية</div>
+        </div>
+        <div class="shot">
+          <img src="https://images.pexels.com/photos/6474127/pexels-photo-6474127.jpeg?cs=srgb&dl=pexels-tima-miroshnichenko-6474127.jpg&fm=jpg" alt="معجون وتجهيز الجدار قبل الدهان" loading="lazy">
+          <div class="label">تأسيس ومعجون</div>
+        </div>
+        <div class="shot wide">
+          <img src="https://images.pexels.com/photos/18470953/pexels-photo-18470953.jpeg?cs=srgb&dl=pexels-alan-antony-279974862-18470953.jpg&fm=jpg" alt="غرفة معيشة أنيقة بدهانات هادئة" loading="lazy">
+          <div class="label">النتيجة النهائية التي يريدها العميل</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">الخدمات والأسعار</div>
+        <h2>كل ما يحتاجه العميل في صفحة واحدة</h2>
+        <p>الأسعار الموجودة هنا بداية تقريبية ويمكن تعديلها حسب المدينة والمساحة ونوع الخامة المطلوبة.</p>
+      </div>
+
+      <div class="service-grid">
+        <div class="service-card">
+          <div class="service-top">
+            <div>
+              <h3>دهانات داخلية فاخرة</h3>
+              <p>تشطيب مجالس وغرف نوم وصالات وشقق بألوان ناعمة ولمسات نظيفة.</p>
+            </div>
+            <div class="service-icon">🎨</div>
+          </div>
+          <div class="price">يبدأ من 12 ر س للمتر</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-top">
+            <div>
+              <h3>دهانات خارجية</h3>
+              <p>واجهات تتحمل الأجواء وتظهر العقار بشكل أجمل وأكثر ترتيبًا.</p>
+            </div>
+            <div class="service-icon">🏠</div>
+          </div>
+          <div class="price">يبدأ من 18 ر س للمتر</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-top">
+            <div>
+              <h3>معجون وتأسيس كامل</h3>
+              <p>تجهيز احترافي قبل الدهان للحصول على سطح ناعم ومتناسق.</p>
+            </div>
+            <div class="service-icon">🪜</div>
+          </div>
+          <div class="price">يبدأ من 9 ر س للمتر</div>
+        </div>
+
+        <div class="service-card">
+          <div class="service-top">
+            <div>
+              <h3>ترميم وتجديد قبل التأجير أو البيع</h3>
+              <p>خيار مثالي لرفع قيمة الشقة أو البيت بسرعة وبتكلفة محسوبة.</p>
+            </div>
+            <div class="service-icon">✨</div>
+          </div>
+          <div class="price">حسب المعاينة</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">قبل وبعد</div>
+        <h2>الفرق الذي يراه العميل بعينه</h2>
+        <p>هذا الجزء مهم جدًا نفسيًا لأنه يجعل العميل يتخيل التحول داخل بيته هو.</p>
+      </div>
+
+      <div class="compare">
+        <div class="compare-card">
+          <div>
+            <small>قبل</small>
+            <ul>
+              <li>جدران باهتة ومظهر قديم</li>
+              <li>تفاصيل غير مرتبة</li>
+              <li>إحساس بضيق المكان</li>
+            </ul>
+          </div>
+          <div class="mini-icon">قبل</div>
+        </div>
+        <div class="compare-card after">
+          <div>
+            <small>بعد</small>
+            <ul>
+              <li>ألوان هادئة وفخمة</li>
+              <li>سطح ناعم وتشطيب أنظف</li>
+              <li>إحساس أوسع وأرتب للمكان</li>
+            </ul>
+          </div>
+          <div class="mini-icon" style="background: rgba(255,255,255,.12); color: #f6d2a8;">بعد</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">باقات جاهزة</div>
+        <h2>خيارات تسهّل قرار الطلب</h2>
+        <p>وجود باقات واضحة يخفف تردد العميل ويجعله يعرف من أين يبدأ.</p>
+      </div>
+
+      <div class="price-grid">
+        <div class="price-card">
+          <h3>الباقة الاقتصادية</h3>
+          <div class="price-title">850 ر س</div>
+          <div class="price-sub">مناسبة لغرفة أو مساحة صغيرة مع شغل مرتب وسريع</div>
+          <ul class="price-list">
+            <li>✓ دهان أساسي نظيف</li>
+            <li>✓ تعديل عيوب بسيطة</li>
+            <li>✓ تسليم مرتب</li>
+          </ul>
+        </div>
+
+        <div class="price-card highlight">
+          <div class="eyebrow" style="background: rgba(255,255,255,.08); color: #f2c89f; border-color: rgba(255,255,255,.08);">الأكثر طلبًا</div>
+          <h3 style="margin-top: 12px;">الباقة المتكاملة</h3>
+          <div class="price-title">1850 ر س</div>
+          <div class="price-sub">لشقة صغيرة أو متوسطة مع تأسيس ومعجون ودهان نهائي محترف</div>
+          <ul class="price-list">
+            <li>✓ تأسيس ومعجون</li>
+            <li>✓ دهانات نهائية ناعمة</li>
+            <li>✓ تنظيف وتسليم كامل</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">آراء العملاء</div>
+        <h2>الكلام الذي يطمّن العميل قبل التواصل</h2>
+        <p>هذه أمثلة جاهزة، ويمكنك لاحقًا استبدالها بآراء حقيقية من عملائك.</p>
+      </div>
+
+      <div class="testimonials">
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>الصراحة شغله نظيف جدًا ومرتب، التزم معنا في الوقت والنتيجة فرقت كثير في الصالة.</p>
+          <b>أبو خالد</b>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>كان عندنا جدران فيها عيوب كثيرة وبعد الشغل صار المكان أهدى وأفخم بكثير من قبل.</p>
+          <b>أم فهد</b>
+        </div>
+        <div class="testimonial">
+          <div class="stars">★★★★★</div>
+          <p>أنصح فيه للي يجهز شقة أو يجدد قبل التأجير، لأنه يعرف يطلع المكان بمظهر يفتح النفس.</p>
+          <b>عميل عقاري</b>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <div class="eyebrow">أسئلة شائعة</div>
+        <h2>إجابات تقفل الاعتراضات قبل ما تبدأ</h2>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item active">
+          <div class="faq-head">
+            <h3>هل المعاينة مجانية؟</h3>
+            <div class="faq-plus">+</div>
+          </div>
+          <p>نعم، يتم الاتفاق على المعاينة وتحديد المطلوب ثم تقديم السعر المناسب بشكل واضح قبل بدء العمل.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-head">
+            <h3>هل توفرون المواد والخامات؟</h3>
+            <div class="faq-plus">+</div>
+          </div>
+          <p>نعم، يمكن توفير كامل الخامات أو التنفيذ بخامات العميل حسب الاتفاق والميزانية.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-head">
+            <h3>هل الشغل للشقق فقط؟</h3>
+            <div class="faq-plus">+</div>
+          </div>
+          <p>لا، التنفيذ متاح للشقق والفلل والمجالس والمكاتب والمحلات وبعض الواجهات الخارجية أيضًا.</p>
+        </div>
+        <div class="faq-item">
+          <div class="faq-head">
+            <h3>كم مدة التنفيذ؟</h3>
+            <div class="faq-plus">+</div>
+          </div>
+          <p>تختلف حسب المساحة ونوع الشغل، لكن يتم تحديد المدة التقريبية من البداية بوضوح.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-card reveal">
+      <div class="eyebrow" style="background: rgba(255,255,255,.08); color: #f1c598; border-color: rgba(255,255,255,.10);">جاهز للمعاينة والتنفيذ</div>
+      <h2 style="font-size: 28px; line-height: 1.45; margin: 14px 0 8px;">خل بيتك يطلع بالشكل اللي يشرّف</h2>
+      <p>
+        راسلنا الآن وخذ السعر المناسب حسب المساحة ونوع العمل المطلوب. هذه الصفحة مجهزة لتدفع العميل للاتصال فورًا بدون تردد.
+      </p>
+
+      <div class="phone-box">
+        <a class="phone-chip" id="phoneChip" href="#">📞 0591234567</a>
+        <a class="phone-chip" id="waChip" href="#">💬 اطلب عبر واتساب الآن</a>
+      </div>
+
+      <div class="muted-note">يمكنك تعديل الاسم والرقم والأسعار والنصوص والصور من أعلى الكود بسهولة</div>
+    </section>
+  </div>
+
+  <div class="sticky-cta">
+    <a id="stickyCall" class="call" href="#">📞 اتصال مباشر</a>
+    <a id="stickyWa" class="wa" href="#">💬 واتساب</a>
+  </div>
+
+  <script>
+    const DATA = {
+      name: 'بهية للنقاشة والدهانات',
+      phone: '0591234567',
+      whatsapp: '966591234567'
+    };
+
+    document.title = DATA.name;
+    document.getElementById('bizNameTop').textContent = DATA.name;
+
+    const telLink = `tel:${DATA.phone}`;
+    const waLink = `https://wa.me/${DATA.whatsapp}`;
+
+    ['heroCall','phoneChip','stickyCall'].forEach(id => {
+      const el = document.getElementById(id);
+      el.href = telLink;
+      if (id === 'phoneChip') el.textContent = `📞 ${DATA.phone}`;
+    });
+
+    ['heroWa','waChip','stickyWa'].forEach(id => {
+      document.getElementById(id).href = waLink;
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const active = item.classList.contains('active');
+        faqItems.forEach(i => i.classList.remove('active'));
+        if (!active) item.classList.add('active');
+      });
+    });
+
+    const progressBar = document.getElementById('progressBar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (scrollTop / docHeight) * 100;
+      progressBar.style.width = progress + '%';
+
+      const heroMedia = document.getElementById('heroMedia');
+      heroMedia.style.transform = `scale(1.05) translateY(${scrollTop * 0.045}px)`;
+    });
+
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = +el.dataset.count;
+        let current = 0;
+        const step = Math.max(1, Math.ceil(target / 40));
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent = current === 100 ? '%100' : '+' + current;
+        }, 32);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.8 });
+    counters.forEach(counter => counterObserver.observe(counter));
+  </script>
+</body>
+</html>
